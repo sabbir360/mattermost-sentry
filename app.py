@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from requests import request as curl_request
 from urllib.parse import quote_plus
 from config import *
@@ -55,4 +55,4 @@ def oauth():
 
 
 if __name__ == "__main__":
-    app.run(debug=DEBUG)
+    app.run(debug=DEBUG, port=PORT)
