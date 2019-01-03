@@ -1,4 +1,4 @@
-# Mattermost JIRA Web Hook
+# Mattermost Sentry Web Hook
 
 ### Prerequisites
  - Python (2/3)
