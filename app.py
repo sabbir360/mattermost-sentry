@@ -42,7 +42,9 @@ def mattermost_jira(token):
         if data and data.get("project_name", None) and data.get("message", None):
             sentry_url = "[Click Here For Details]("+data.get("url", "#")+")"
 
-            return post_to_mattermost(text="`"+data['message']+"\n\n"+sentry_url, username=data['project_name'].replace("-", " ").title())
+            return post_to_mattermost(text="`"+data['message']+"`\n\n" +
+                                           sentry_url.replace("/sentry/sentry/", "/sentry/", 1),
+                                      username=data['project_name'].replace("-", " ").title())
         else:
             print("Project name and Message Missing!")
     else:
