@@ -1,15 +1,15 @@
 from flask import Flask, request
 from requests import request as curl_request
-from urllib.parse import quote_plus
+from urllib.parse import quote, urlencode, quote_plus
 from config import *
 
 app = Flask(__name__)
 
 
 def post_to_mattermost(text, channel=CHANNEL, username=USER_NAME, icon=USER_ICON):
-
+    text =quote_plus(text) # urlencode(text, quote_via=quote_plus)
     payload = """{}"channel": "{}", "text": "{}", "username": "{}", "icon_url":"{}"{}""".format("payload={", channel, text, username, quote_plus(icon), "}")
-
+    
     # payload = "payload={"+payload+"}"
     print(payload)
     headers = {
@@ -37,9 +37,8 @@ def mattermost_jira(token):
         except Exception as ex:
             return str(ex)
 
-        print(data)
-
         if data and data.get("project_name", None) and data.get("message", None):
+            print(data['message'])
             sentry_url = "[Click Here For Details]("+data.get("url", "#")+")"
 
             return post_to_mattermost(text="`"+data['message']+"`\n\n" +
@@ -47,6 +46,7 @@ def mattermost_jira(token):
                                       username=data['project_name'].replace("-", " ").title())
         else:
             print("Project name and Message Missing!")
+            print(data)
     else:
         print("Wrong hook.")
 
