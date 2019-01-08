@@ -7,7 +7,8 @@ app = Flask(__name__)
 
 
 def post_to_mattermost(text, channel=CHANNEL, username=USER_NAME, icon=USER_ICON):
-    text =quote_plus(text) # urlencode(text, quote_via=quote_plus)
+    # text =quote_plus(text) # urlencode(text, quote_via=quote_plus)
+    text = text.replace('"', '\\"')
     payload = """{}"channel": "{}", "text": "{}", "username": "{}", "icon_url":"{}"{}""".format("payload={", channel, text, username, quote_plus(icon), "}")
     
     # payload = "payload={"+payload+"}"
