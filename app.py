@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 def post_to_mattermost(text, channel=CHANNEL, username=USER_NAME, icon=USER_ICON):
     # text =quote_plus(text) # urlencode(text, quote_via=quote_plus)
-    text = text.replace('"', '\\"').replace("'", "\\'")
-    payload = """{}"channel": "{}", "text": "{}", "username": "{}", "icon_url":"{}"{}""".format("payload={", channel, text, username, quote_plus(icon), "}")
-    
+    # text = text.replace('"', '\\"').replace("'", "\\'")
+    # payload = "payload={"+channel+": "{}", "text": "{}", "username": "{}", "icon_url":"{}"{}""".format("payload={", channel, text, username, quote_plus(icon), "}")
+    payload = 'payload={"channel":'+channel+',"text":'+quote_plus(text)+',"username":'+username+'}'
     # payload = "payload={"+payload+"}"
     print(payload)
     headers = {
@@ -43,7 +43,7 @@ def mattermost_jira(token):
             print(data['message'])
             sentry_url = "[Click Here For Details]("+data.get("url", "#")+")"
 
-            return post_to_mattermost(text="`"+str(data['message']['error'])+"`\n\n" +
+            return post_to_mattermost(text="`"+data['message'].replace('"', '')+"`\n\n" +
                                            sentry_url.replace("/sentry/sentry/", "/sentry/", 1),
                                       username=data['project_name'].replace("-", " ").title())
         else:
