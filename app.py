@@ -10,7 +10,7 @@ def post_to_mattermost(text, channel=CHANNEL, username=USER_NAME, icon=USER_ICON
     # text =quote_plus(text) # urlencode(text, quote_via=quote_plus)
     # text = text.replace('"', '\\"').replace("'", "\\'")
     # payload = "payload={"+channel+": "{}", "text": "{}", "username": "{}", "icon_url":"{}"{}""".format("payload={", channel, text, username, quote_plus(icon), "}")
-    payload = 'payload={"channel":'+channel+',"text":'+quote_plus(text)+',"username":'+username+'}'
+    payload = 'payload={"channel":"'+channel+'","text":"'+quote_plus(text)+'","username":"'+username+'"}'
     # payload = "payload={"+payload+"}"
     print(payload)
     headers = {
