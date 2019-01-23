@@ -37,12 +37,13 @@ def mattermost_jira(token):
             data = request.json
         except Exception as ex:
             return str(ex)
-
+        print(data)
+        print("-------------")
         if data and data.get("project_name", None) and data.get("message", None):
             print(data['message'])
             sentry_url = "[Click Here For Details]("+data.get("url", "#")+")"
 
-            return post_to_mattermost(text="`"+str(data['message'])+"`\n\n" +
+            return post_to_mattermost(text="`"+str(data['message']['error'])+"`\n\n" +
                                            sentry_url.replace("/sentry/sentry/", "/sentry/", 1),
                                       username=data['project_name'].replace("-", " ").title())
         else:
