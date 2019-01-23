@@ -42,7 +42,7 @@ def mattermost_jira(token):
             print(data['message'])
             sentry_url = "[Click Here For Details]("+data.get("url", "#")+")"
 
-            return post_to_mattermost(text="`"+data['message']+"`\n\n" +
+            return post_to_mattermost(text="`"+str(data['message']))+"`\n\n" +
                                            sentry_url.replace("/sentry/sentry/", "/sentry/", 1),
                                       username=data['project_name'].replace("-", " ").title())
         else:
